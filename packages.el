@@ -26,6 +26,10 @@
       :init
       (advice-add 'realgud-short-key-mode-setup
                   :before #'debug-short-key-state)
+
+      (add-hook 'realgud-short-key-mode-hook
+                'spacemacs/realgud-transient-state/body)
+
       (evilified-state-evilify-map realgud:shortkey-mode-map
         :eval-after-load realgud
         :mode realgud-short-key-mode
@@ -42,7 +46,8 @@
         "bs" 'realgud:cmd-disable
         "be" 'realgud:cmd-enable
 
-        "e" 'realgud:cmd-eval-dwim
+        "e" 'debug--realgud-eval-dwim
         "r" 'realgud:cmd-restart
-        "q" 'realgud:cmd-quit
+        "q" 'realgud-short-key-mode-off
+        "Q" 'realgud:cmd-quit
         "S" 'realgud-window-cmd-undisturb-src))))
