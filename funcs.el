@@ -26,6 +26,39 @@ Therefore you should add it to a pre-init-realgud definition"
   (let ((dbg-name (debug-generate-symbol debugger)))
     (add-to-list 'debug-autoload-debuggers dbg-name)
     (spacemacs/set-leader-keys-for-major-mode mode
-      "dd" dbg-name)))
+      "dd" dbg-name
+      "d." 'spacemacs/realgud-transient-state/body
+      "db" 'debug--realgud-set-break
+      "de" 'debug--realgud-eval-dwim
+      "dJ" 'realgud:cmd-jump)
+    ))
 
+(defun debug--mark-symbol-at-point ()
+  "Select the symbol under cursor, if using `evil' go into
+`visual' state and expand the visual selection."
+  (interactive)
+  (when (not (use-region-p))
+    (let ((b (bounds-of-thing-at-point 'symbol)))
+      (goto-char (car b))
+      (set-mark (cdr b))
+      (when (and (featurep 'evil) evil-mode)
+        (evil-visual-state)
+        (evil-visual-expand-region)))))
 
+(defun debug--realgud-init ()
+  (interactive)
+  (when (not (realgud-get-cmdbuf))
+    (realgud-short-key-mode)))
+
+(defun debug--realgud-set-break ()
+  (interactive)
+  (debug--realgud-init)
+  (realgud:cmd-break))
+
+(defun debug--realgud-eval-dwim ()
+  (interactive)
+  (when (not (use-region-p))
+    (debug--mark-symbol-at-point))
+  (realgud:cmd-eval-dwim)
+  (when (and (featurep 'evil) evil-mode)
+    (call-interactively 'evil-exit-visual-state)))

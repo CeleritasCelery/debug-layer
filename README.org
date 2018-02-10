@@ -33,9 +33,13 @@ compatible by checking [[https://github.com/realgud/realgud/wiki/Debuggers-Suppo
 
 ** Leader
 
- | Key Binding | Description     |
- |-------------+-----------------|
- | ~SPC m d d~ | open cmd buffer |
+ | Key Binding | Description                           |
+ |-------------+---------------------------------------|
+ | ~SPC m d d~ | open cmd buffer                       |
+ | ~SPC m d .~ | open transient state                  |
+ | ~SPC m d b~ | set breakpoint                        |
+ | ~SPC m d e~ | eval symbol at point or marked region |
+ | ~SPC m d J~ | jump to current line                  |
 
 ** shortkey-mode
 
@@ -48,7 +52,8 @@ compatible by checking [[https://github.com/realgud/realgud/wiki/Debuggers-Suppo
  | ~J~         | jump to current line |
  | ~e~         | eval variable        |
  | ~r~         | restart              |
- | ~q~         | quit debug           |
+ | ~q~         | quit shortkey-mode   |
+ | ~Q~         | quit debug           |
  | ~S~         | goto cmd buffer      |
  | ~bb~        | set break            |
  | ~bc~        | clear break          |
